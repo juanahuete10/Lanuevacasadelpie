@@ -10,25 +10,31 @@ package Modelo;
  * @author personal
  */
 public class Categoria {
-     String IdCategorias;
-     String Nombre;
-     String Descripcion;
-     
-       public Categoria() {
+
+    int IdCategorias;
+    String Nombre;
+    String Descripcion;
+
+    public Categoria() {
     }
 
-    public Categoria(String IdCategorias, String Nombre, String Descripcion) {
+    
+    public Categoria(int IdCategorias, String Nombre, String Descripcion) {
         this.IdCategorias = IdCategorias;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
     }
-    
 
-    public String getIdCategorias() {
+    public Categoria(int IdCategorias, String Nombre) {
+        this.IdCategorias = IdCategorias;
+        this.Nombre = Nombre;
+    }
+
+    public int getIdCategorias() {
         return IdCategorias;
     }
 
-    public void setIdCategorias(String IdCategorias) {
+    public void setIdCategorias(int IdCategorias) {
         this.IdCategorias = IdCategorias;
     }
 
@@ -47,11 +53,6 @@ public class Categoria {
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
     }
-     
-     
+
+    
 }
-
-    
-    
-
-   

@@ -5,9 +5,12 @@
  */
 package Vista;
 
+import Controlador.CRUDCategoria;
 import Controlador.CRUDProducto;
+import Modelo.Categoria;
 import Modelo.Producto;
 import java.awt.HeadlessException;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,48 +19,56 @@ import javax.swing.table.DefaultTableModel;
  * @author personal
  */
 public class frmProducto extends javax.swing.JFrame {
-
+    
     int datoSeleccionado;
-
+    
     public frmProducto() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         mostrar();
+        llenarcomboboxCategoria();
+    }
+    
+    public void llenarcomboboxCategoria() {
+        CRUDProducto cate = new CRUDProducto();
+        DefaultComboBoxModel<Categoria> modelo = cate.Llenar();
+        comboCategoria.setModel(modelo);
     }
 
     public void mostrar() {
         try {
             DefaultTableModel modelo;
-            CRUDProducto pro = new CRUDProducto(); 
+            CRUDProducto pro = new CRUDProducto();            
             modelo = pro.mostrarDatos();
             jTableProducto.setModel(modelo);
-
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
         
     }
     
-    public void agregarProducto(){
+    public void agregarProducto() {
         CRUDProducto pro = new CRUDProducto();
         Producto p1 = new Producto(jTextIdProducto.getText(),
-        Integer.parseInt(jTextPrecioVenta.getText()), 
+                Integer.parseInt(jTextPrecioVenta.getText()),
                 Integer.parseInt(jTextCantidad.getText()),
                 Integer.parseInt(jTextPrecioCompra.getText()),
                 jTextDescripcion.getText(), jTextCategoria.getText(),
                 jTextTalla.getText());
         pro.Agregar(p1);
     }
-
-    public void limpiar(){
-         jTextIdProducto.setText("");
-          jTextPrecioVenta.setText("");
-           jTextCantidad.setText("");
-            jTextPrecioCompra.setText("");
-             jTextDescripcion.setText("");
-              jTextCategoria.setText("");
-               jTextTalla.setText("");
+    
+    public void limpiar() {
+        jTextIdProducto.setText("");
+        jTextPrecioVenta.setText("");
+        jTextCantidad.setText("");
+        jTextPrecioCompra.setText("");
+        jTextDescripcion.setText("");
+        jTextCategoria.setText("");
+        jTextTalla.setText("");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,6 +101,8 @@ public class frmProducto extends javax.swing.JFrame {
         jTableProducto = new javax.swing.JTable();
         jTextPrecioCompra = new javax.swing.JTextField();
         jTextPrecioVenta = new javax.swing.JTextField();
+        comboCategoria = new javax.swing.JComboBox<>();
+        comboMarca = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -179,6 +192,12 @@ public class frmProducto extends javax.swing.JFrame {
             jTableProducto.getColumnModel().getColumn(9).setPreferredWidth(40);
         }
 
+        comboCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -213,10 +232,14 @@ public class frmProducto extends javax.swing.JFrame {
                                     .addComponent(jTextCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                                     .addComponent(jTextCategoria))
                                 .addGap(63, 63, 63)
-                                .addComponent(jLabel10)
-                                .addGap(58, 58, 58)
-                                .addComponent(jTextTalla, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel10))
+                            .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboMarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextTalla, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                                .addComponent(comboCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(0, 176, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -244,13 +267,15 @@ public class frmProducto extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel8)
                     .addComponent(jTextCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel11)
                     .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextPrecioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 25, Short.MAX_VALUE))
@@ -281,7 +306,7 @@ public class frmProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-
+        
         if (datoSeleccionado >= 0) {
             String dato
                     = String.valueOf(jTableProducto.getValueAt(datoSeleccionado, 0));
@@ -292,7 +317,7 @@ public class frmProducto extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE,
                     JOptionPane.YES_NO_OPTION)
                     == JOptionPane.YES_OPTION) {
-
+                
                 p1.eliminar(dato);
                 mostrar();
                 JOptionPane.showMessageDialog(null,
@@ -356,6 +381,10 @@ public class frmProducto extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
+    private void comboCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -393,6 +422,8 @@ public class frmProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboCategoria;
+    private javax.swing.JComboBox<String> comboMarca;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonAgregar;
@@ -419,6 +450,5 @@ public class frmProducto extends javax.swing.JFrame {
     private javax.swing.JTextField jTextPrecioVenta;
     private javax.swing.JTextField jTextTalla;
     // End of variables declaration//GEN-END:variables
-
 
 }

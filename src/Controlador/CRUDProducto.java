@@ -4,9 +4,11 @@
  */
 package Controlador;
 
+import Modelo.Categoria;
 import Modelo.Producto;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -129,4 +131,26 @@ public class CRUDProducto {
 
         }
     }
+    
+    
+    public DefaultComboBoxModel<Categoria> Llenar() {
+    DefaultComboBoxModel<Categoria> modelo = new DefaultComboBoxModel<>();
+    modelo.addElement(new Categoria(-1, "Categoria"));
+
+    try {
+        CallableStatement cbstc = cn.prepareCall("{call LlenarCategoria}");
+        ResultSet rs = cbstc.executeQuery();
+        while (rs.next()) {
+            int IdCategoria = rs.getInt(1);
+            String nombre_categoria = rs.getString(2);
+            Categoria categoria = new Categoria(IdCategoria, nombre_categoria);
+            modelo.addElement(categoria);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+ 
+    return modelo;
+}
+    
 }

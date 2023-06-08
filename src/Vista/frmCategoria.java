@@ -41,7 +41,7 @@ public class frmCategoria extends javax.swing.JFrame {
 
     public void agregarCategoria() {
         CRUDCategoria cc = new CRUDCategoria();
-        Categoria c1 = new Categoria(jTextIdCategoria.getText(),
+        Categoria c1 = new Categoria(Integer.parseInt(jTextIdCategoria.getText()),
                 jTextNombre.getText(),
                 jTextDescripcion.getText());
         cc.Agregar(c1);
