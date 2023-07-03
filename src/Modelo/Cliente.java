@@ -30,8 +30,6 @@ public class Cliente extends Persona {
         this.IdPersona = IdPersona;
     }
 
-
-
     public int getIdCliente() {
         return IdCliente;
     }
@@ -96,5 +94,8 @@ public class Cliente extends Persona {
         this.telefono = telefono;
     }
 
+
+
+  
     
 }

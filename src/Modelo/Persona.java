@@ -9,13 +9,12 @@ package Modelo;
  * @author personal
  */
 public class Persona {
-     String cedula;
+    String cedula;
     String nombre;
     String apellido;
     String direccion;
     String telefono;
-    
-    
+
     public Persona(String cedula, String nombre, String apellido, String direccion, String telefono) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -26,8 +25,6 @@ public class Persona {
 
     public Persona() {
     }
-    
-     
 
     public String getCedula() {
         return cedula;
@@ -68,6 +65,7 @@ public class Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-   
+    
+    
+    
 }
