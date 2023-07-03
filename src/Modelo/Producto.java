@@ -9,32 +9,56 @@ package Modelo;
  * @author personal
  */
 public class Producto {
-     String IdProducto;
+    int IdProducto;
     int PrecioVenta;
     int CantidadDisponible;
-     int PrecioCompra;
-     String Descripcion;
-     String Categoria;
-     String Talla;
-     
-     public Producto() {
+    int PrecioCompra;
+    String Descripcion;
+    int IdCategorias;
+    String Talla;
+    String Proveedor;
+    int IdMarca;
+    String Marca;
+    
+    public Producto() {
     }
-     
-     public Producto(String IdProducto, int PrecioVenta, int CantidadDisponible, int PrecioCompra, String Descripcion, String Categoria, String Talla) {
+
+    public Producto(int PrecioVenta, int CantidadDisponible, int PrecioCompra, String Descripcion, String Talla) {
+        this.PrecioVenta = PrecioVenta;
+        this.CantidadDisponible = CantidadDisponible;
+        this.PrecioCompra = PrecioCompra;
+        this.Descripcion = Descripcion;
+        this.Talla = Talla;
+    }
+
+    
+    
+    public Producto(int IdProducto, int PrecioVenta, int CantidadDisponible, int PrecioCompra, String Descripcion, int IdCategorias, String Talla, String Proveedor, int IdMarca, String Marca) {
         this.IdProducto = IdProducto;
         this.PrecioVenta = PrecioVenta;
         this.CantidadDisponible = CantidadDisponible;
         this.PrecioCompra = PrecioCompra;
         this.Descripcion = Descripcion;
-        this.Categoria = Categoria;
+        this.IdCategorias = IdCategorias;
         this.Talla = Talla;
+        this.Proveedor = Proveedor;
+        this.IdMarca = IdMarca;
+        this.Marca = Marca;
     }
 
-    public String getIdProducto() {
+    public String getProveedor() {
+        return Proveedor;
+    }
+
+    public void setProveedor(String Proveedor) {
+        this.Proveedor = Proveedor;
+    }
+    
+    public int getIdProducto() {
         return IdProducto;
     }
 
-    public void setIdProducto(String IdProducto) {
+    public void setIdProducto(int IdProducto) {
         this.IdProducto = IdProducto;
     }
 
@@ -70,12 +94,12 @@ public class Producto {
         this.Descripcion = Descripcion;
     }
 
-    public String getCategoria() {
-        return Categoria;
+    public int getIdCategorias() {
+        return IdCategorias;
     }
 
-    public void setCategoria(String Categoria) {
-        this.Categoria = Categoria;
+    public void setIdCategorias(int IdCategorias) {
+        this.IdCategorias = IdCategorias;
     }
 
     public String getTalla() {
@@ -86,9 +110,22 @@ public class Producto {
         this.Talla = Talla;
     }
 
-    
+    public int getIdMarca() {
+        return IdMarca;
+    }
 
-    
- 
-     
+    public void setIdMarca(int IdMarca) {
+        this.IdMarca = IdMarca;
+    }
+
+    public String getMarca() {
+        return Marca;
+    }
+
+    public void setMarca(String Marca) {
+        this.Marca = Marca;
+    }
+
+
+
 }

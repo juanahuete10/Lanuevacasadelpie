@@ -4,7 +4,6 @@
  */
 package Controlador;
 
-import Modelo.Producto;
 import Modelo.Venta;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -18,25 +17,26 @@ import javax.swing.table.DefaultTableModel;
  * @author personal
  */
 public class CRUDVenta {
-    private final Conexion con = new Conexion();
+     private final Conexion con = new Conexion();
     private final Connection cn = (Connection) con.conectar();
     
     public DefaultTableModel mostrarDatos(){
         ResultSet rs;
        DefaultTableModel modelo;
-       String[] titulos = {"CodigoVenta", "NombreCliente", "Fecha"};
-       String[] registro = new String[6];
+       String[] titulos = {"CodigoVenta", "IdCliente", "IdEmpleado", "Fecha"};
+       String[] registro = new String[4];
        
        modelo = new DefaultTableModel(null, titulos);
        
        try{
-            CallableStatement cbstc = cn.prepareCall("{call MostrarVenta}");
+            CallableStatement cbstc = cn.prepareCall("{call MostrarVentas}");
             rs = cbstc.executeQuery();
 
         while (rs.next()){
             registro[0] = rs.getString("CodigoVenta");
-                   registro[1] = rs.getNString("NombreCliente");
-                   registro[2] = rs.getNString("Fecha");
+                   registro[1] = rs.getNString("IdCliente");
+                   registro[2] = rs.getNString("IdEmpleado");
+                   registro[3] = rs.getNString("Fecha");
                    
                    modelo.addRow(registro);
         }
@@ -50,10 +50,10 @@ public class CRUDVenta {
     
     public void Agregar (Venta ven){
         try{
-            CallableStatement cbst = cn.prepareCall("{call CrearVenta(?,?,?,?,?,?)}");
-            cbst.setInt(ven.getCodigoVenta(), 1);
-            cbst.setString(2, ven.getNommbreCliente());
-            cbst.setInt(ven.getFecha(), 3);
+            CallableStatement cbst = cn.prepareCall("{call InsertarVenta(?,?,?)}");
+            cbst.setInt(1, ven.getIdCliente());
+            cbst.setInt(2, ven.getIdEmpleado());
+            cbst.setInt(3, ven.getFecha());
             cbst.executeUpdate();
             
         }catch (SQLException e){
@@ -61,10 +61,24 @@ public class CRUDVenta {
         }   
     }
     
-    public void eliminar(int CodigoVenta){
+    public boolean verificarDatos(String dato){
+        ResultSet rs;
         try{
-            CallableStatement cbst = cn.prepareCall("{call EliminarVenta(?)}");
-            cbst.setInt(CodigoVenta, 1);
+            CallableStatement call = cn.prepareCall("{call VerificarVenta(?)}");
+            call.setString(1, dato);
+            rs = call.executeQuery();
+            return rs.next();
+            
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+            return false;
+        }
+    }
+    
+    public void eliminar(String CodigoVenta){
+        try{
+            CallableStatement cbst = cn.prepareCall("{call Eliminar_Venta(?)}");
+            cbst.setString(1, CodigoVenta);
             cbst.executeUpdate();
             
         }catch (SQLException e){
@@ -75,10 +89,10 @@ public class CRUDVenta {
     
     public void actualizar(Venta ven){
         try{
-            CallableStatement cbst = cn.prepareCall("{callModificarPro(?,?,?)}");
-            cbst.setInt(ven.getCodigoVenta(), 1);
-            cbst.setString(2, ven.getNommbreCliente());
-            cbst.setInt(ven.getFecha(), 3);
+            CallableStatement cbst = cn.prepareCall("{call ActualizarVenta(?,?,?)}");
+            cbst.setInt(1, ven.getIdCliente());
+            cbst.setInt(2, ven.getIdEmpleado());
+            cbst.setInt(3, ven.getFecha());
             cbst.executeUpdate();
              
         }catch (SQLException e){

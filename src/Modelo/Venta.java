@@ -10,16 +10,26 @@ package Modelo;
  */
 public class Venta {
     int CodigoVenta;
-    String NommbreCliente;
+    int IdCliente;
+    int IdEmpleado;
      int Fecha;
 
-    public Venta() {
+    public Venta(int IdCliente, int IdEmpleado, int Fecha) {
+        this.IdCliente = IdCliente;
+        this.IdEmpleado = IdEmpleado;
+        this.Fecha = Fecha;
+    }
+     
+     
+     
+      public Venta(int CodigoVenta, int IdCliente, int IdEmpleado, int Fecha) {
+        this.CodigoVenta = CodigoVenta;
+        this.IdCliente = IdCliente;
+        this.IdEmpleado = IdEmpleado;
+        this.Fecha = Fecha;
     }
 
-    public Venta(int CodigoVenta, String NommbreCliente, int Fecha) {
-        this.CodigoVenta = CodigoVenta;
-        this.NommbreCliente = NommbreCliente;
-        this.Fecha = Fecha;
+    public Venta() {
     }
 
     public int getCodigoVenta() {
@@ -30,12 +40,20 @@ public class Venta {
         this.CodigoVenta = CodigoVenta;
     }
 
-    public String getNommbreCliente() {
-        return NommbreCliente;
+    public int getIdCliente() {
+        return IdCliente;
     }
 
-    public void setNommbreCliente(String NommbreCliente) {
-        this.NommbreCliente = NommbreCliente;
+    public void setIdCliente(int IdCliente) {
+        this.IdCliente = IdCliente;
+    }
+
+    public int getIdEmpleado() {
+        return IdEmpleado;
+    }
+
+    public void setIdEmpleado(int IdEmpleado) {
+        this.IdEmpleado = IdEmpleado;
     }
 
     public int getFecha() {
@@ -45,5 +63,9 @@ public class Venta {
     public void setFecha(int Fecha) {
         this.Fecha = Fecha;
     }
+
+   
+     
     
+   
 }

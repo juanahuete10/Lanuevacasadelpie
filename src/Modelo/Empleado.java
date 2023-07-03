@@ -8,38 +8,33 @@ package Modelo;
  *
  * @author personal
  */
-public class Empleado extends Persona{
-    String IdEmpleado;
-  String Cargo;
- String IdPersona;
+public class Empleado extends Persona {
+ int IdEmpleado;
+ String Cargo;
+int IdPersona;
 
-    public Empleado(String IdEmpleado, String Cargo, String IdPersona, String cedula, String nombre, String apellido, String direccion, String telefono) {
+    public Empleado(String Cargo, String cedula, String nombre, String apellido, String direccion, String telefono) {
+        super(cedula, nombre, apellido, direccion, telefono);
+        this.Cargo = Cargo;
+    }
+ 
+
+    public Empleado(int IdEmpleado, String Cargo, String cedula, String nombre, String apellido, String direccion, String telefono) {
         super(cedula, nombre, apellido, direccion, telefono);
         this.IdEmpleado = IdEmpleado;
         this.Cargo = Cargo;
-        this.IdPersona = IdPersona;
-    }
 
-    public Empleado(String IdEmpleado, String Cargo, String IdPersona) {
-        this.IdEmpleado = IdEmpleado;
-        this.Cargo = Cargo;
-        this.IdPersona = IdPersona;
     }
-
-    
 
     public Empleado() {
     }
 
-    public Empleado(String text, String text0, String text1, String text2, String text3, String text4) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public String getIdEmpleado() {
+   
+    public int getIdEmpleado() {
         return IdEmpleado;
     }
 
-    public void setIdEmpleado(String IdEmpleado) {
+    public void setIdEmpleado(int IdEmpleado) {
         this.IdEmpleado = IdEmpleado;
     }
 
@@ -51,12 +46,16 @@ public class Empleado extends Persona{
         this.Cargo = Cargo;
     }
 
-    public String getIdPersona() {
+    public int getIdPersona() {
         return IdPersona;
     }
 
-    public void setIdPersona(String IdPersona) {
+    public void setIdPersona(int IdPersona) {
         this.IdPersona = IdPersona;
+    }
+
+    public Empleado(String Cargo) {
+        this.Cargo = Cargo;
     }
 
     public String getCedula() {
@@ -100,8 +99,4 @@ public class Empleado extends Persona{
     }
 
     
- 
 }
- 
-
-    

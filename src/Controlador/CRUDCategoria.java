@@ -3,11 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controlador;
+
 import Modelo.Categoria;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +20,25 @@ import javax.swing.table.DefaultTableModel;
 public class CRUDCategoria {
     private final Conexion con = new Conexion();
     private final Connection cn = (Connection) con.conectar();
+    
+     public ArrayList mostrarDatosCombo() {
+
+        ArrayList<Categoria> Categoria = new ArrayList();
+
+        try {
+            CallableStatement cbstc = cn.prepareCall("{call RellenarCategoria}");
+            ResultSet rs = cbstc.executeQuery();
+            while (rs.next()) {
+                Categoria ca = new Categoria();
+                ca.setIdCategorias(Integer.parseInt(rs.getString("IdCategoria")));
+                ca.setNombre(rs.getString("Nombre"));
+                Categoria.add(ca);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return Categoria;
+    }
     
     public DefaultTableModel mostrarDatos(){
         ResultSet rs;
@@ -47,10 +68,9 @@ public class CRUDCategoria {
     public void Agregar (Categoria ca){
         
         try {
-            CallableStatement cbst = cn.prepareCall("{call InsertarCategorias(?,?,?)}");
-            cbst.setString(1, ca.getIdCategorias());
-            cbst.setString(2, ca.getNombre());
-            cbst.setString(3, ca.getDescripcion());
+            CallableStatement cbst = cn.prepareCall("{call InsertarCategoria(?,?)}");
+            cbst.setString(1, ca.getNombre());
+            cbst.setString(2, ca.getDescripcion());
             cbst.execute();
             
             
@@ -62,7 +82,7 @@ public class CRUDCategoria {
     public boolean verificarDatos(String dato){
         ResultSet rs;
         try{
-            CallableStatement call = cn.prepareCall("{call VerificarCategorias(?)}");
+            CallableStatement call = cn.prepareCall("{call VerificarCategoria(?)}");
             call.setString(1, dato);
             rs = call.executeQuery();
             return rs.next();
@@ -88,14 +108,15 @@ public class CRUDCategoria {
              
         public void actualizar(Categoria ca){
             try{
-                CallableStatement cbst = cn.prepareCall("{call ActualizarCategorias(?,?,?,?,?,?,?)}");
-                cbst.setInt(ca.getIdCategorias(), 1);
+                CallableStatement cbst = cn.prepareCall("{call ActualizarCategoria(?,?,?)}");
+                cbst.setInt(1, ca.getIdCategorias());
                 cbst.setString(2, ca.getNombre());
                 cbst.setString(3, ca.getDescripcion());
+                cbst.executeUpdate();
                 
             }catch (SQLException e){
               JOptionPane.showMessageDialog(null, e);  
             }
             
         }
-    }
+}

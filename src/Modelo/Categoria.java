@@ -1,4 +1,3 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -10,26 +9,24 @@ package Modelo;
  * @author personal
  */
 public class Categoria {
-
     int IdCategorias;
-    String Nombre;
-    String Descripcion;
-
+     String Nombre;
+     String Descripcion; 
     public Categoria() {
-    }
-
-    
-    public Categoria(int IdCategorias, String Nombre, String Descripcion) {
-        this.IdCategorias = IdCategorias;
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
     }
 
     public Categoria(int IdCategorias, String Nombre) {
         this.IdCategorias = IdCategorias;
         this.Nombre = Nombre;
     }
+     
 
+    public Categoria(String Nombre, String Descripcion) {
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+    }
+
+     
     public int getIdCategorias() {
         return IdCategorias;
     }
@@ -53,6 +50,21 @@ public class Categoria {
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
     }
+
+    public Categoria(int IdCategorias, String Nombre, String Descripcion) {
+        this.IdCategorias = IdCategorias;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+    }
+
+    
+    
+     @Override
+    public String toString(){
+        return IdCategorias +" - " + Nombre;
+    }
+
+   
 
     
 }

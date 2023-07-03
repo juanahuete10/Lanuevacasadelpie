@@ -3,16 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controlador;
+
 import Modelo.Empleado;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author personal
  */
 public class CRUDEmpleado {
-    private final Conexion con = new Conexion();
+   private final Conexion con = new Conexion();
     private final Connection cn = (Connection) con.conectar();
     
     public DefaultTableModel mostrarDatos(){
@@ -24,11 +29,12 @@ public class CRUDEmpleado {
        modelo = new DefaultTableModel(null, titulos);
                
        try{
-            CallableStatement cbstc = cn.prepareCall("{call MostrarEmpleado}");
+            CallableStatement cbstc = cn.prepareCall("{call MostrarEmpleados}");
             rs = cbstc.executeQuery();
            
             while (rs.next()) {
                 registro[0] = rs.getString("IdEmpleado");
+             
                    registro[1] = rs.getNString("Cedula");
                    registro[2] = rs.getNString("Nombre");
                    registro[3] = rs.getNString("Apellido");
@@ -47,14 +53,14 @@ public class CRUDEmpleado {
     }
     public void Agregar (Empleado emp){
         try{
-            CallableStatement cbst = cn.prepareCall("{call InsertarEmpleado(?,?,?,?,?,?,?)}");
-            cbst.setString(1, emp.getIdEmpleado());
-            cbst.setString(2, emp.getCedula());
-            cbst.setString(3, emp.getNombre());
-            cbst.setString(4, emp.getApellido());
-            cbst.setString(5, emp.getDireccion());
-            cbst.setString(6, emp.getTelefono());
-            cbst.setString(7, emp.getCargo());
+            CallableStatement cbst = cn.prepareCall("{call InsertarEmpleado(?,?,?,?,?,?)}");
+            cbst.setString(1, emp.getCedula());
+            cbst.setString(2, emp.getNombre());
+            cbst.setString(3, emp.getApellido());
+            cbst.setString(4, emp.getDireccion());
+            cbst.setString(5, emp.getTelefono());
+            cbst.setString(6, emp.getCargo());
+            cbst.execute();
             
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, e);
@@ -78,7 +84,7 @@ public class CRUDEmpleado {
      public void eliminar(String IdEmpleado){
          
           try{
-               CallableStatement cbst = cn.prepareCall("{call Eliminar Empleado(?)}");
+               CallableStatement cbst = cn.prepareCall("{call Eliminar_Empleado(?)}");
             cbst.setString(1, IdEmpleado);
             cbst.executeUpdate();
             
@@ -89,18 +95,17 @@ public class CRUDEmpleado {
     
     public void actualizar(Empleado emp){
         try{
-            CallableStatement cbst = cn.prepareCall("{call ACtualizarEmpleado(?,?,?,?,?,?,?)}");
-            cbst.setString(1, emp.getIdEmpleado());
-             cbst.setString(2, emp.getCedula());
-            cbst.setString(3, emp.getNombre());
-            cbst.setString(4, emp.getApellido());
-            cbst.setString(5, emp.getDireccion());
-              cbst.setString(6, emp.getTelefono());
-            cbst.setString(7, emp.getCargo());
+            CallableStatement cbst = cn.prepareCall("{call ACtualizarEmpleado(?,?,?,?,?,?)}");
+             cbst.setString(1, emp.getCedula());
+            cbst.setString(2, emp.getNombre());
+            cbst.setString(3, emp.getApellido());
+            cbst.setString(4, emp.getDireccion());
+              cbst.setString(5, emp.getTelefono());
+            cbst.setString(6, emp.getCargo());
                     
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, e);
         
         }
-    }
+    } 
 }

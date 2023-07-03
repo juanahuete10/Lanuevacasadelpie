@@ -9,31 +9,39 @@ package Modelo;
  * @author personal
  */
 public class Proveedor extends Persona {
-     String IdProveedor;
+     int IdProveedor;
      String Email;
      String NombrEmpresa;
-     String IdPersona;
-     
-        public Proveedor() {
+     int IdPersona;
+
+    public Proveedor() {
     }
-     
-       public Proveedor(String IdProveedor, String Email, String NombrEmpresa, String IdPersona, String cedula, String nombre, String apellido, String direccion, String telefono) {
+   
+
+    public Proveedor(int IdProveedor, String NombrEmpresa) {
+        this.IdProveedor = IdProveedor;
+        this.NombrEmpresa = NombrEmpresa;
+    }
+
+    public Proveedor(String Email, String NombrEmpresa, String cedula, String nombre, String apellido, String direccion, String telefono) {
+        super(cedula, nombre, apellido, direccion, telefono);
+        this.Email = Email;
+        this.NombrEmpresa = NombrEmpresa;
+    }
+    
+    public Proveedor(int IdProveedor, String Email, String NombrEmpresa, String cedula, String nombre, String apellido, String direccion, String telefono) {
         super(cedula, nombre, apellido, direccion, telefono);
         this.IdProveedor = IdProveedor;
         this.Email = Email;
         this.NombrEmpresa = NombrEmpresa;
-        this.IdPersona = IdPersona;
+        
     }
 
-    public Proveedor(String text, String text0, String text1, String text2, int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public String getIdProveedor() {
+    public int getIdProveedor() {
         return IdProveedor;
     }
 
-    public void setIdProveedor(String IdProveedor) {
+    public void setIdProveedor(int IdProveedor) {
         this.IdProveedor = IdProveedor;
     }
 
@@ -53,11 +61,11 @@ public class Proveedor extends Persona {
         this.NombrEmpresa = NombrEmpresa;
     }
 
-    public String getIdPersona() {
+    public int getIdPersona() {
         return IdPersona;
     }
 
-    public void setIdPersona(String IdPersona) {
+    public void setIdPersona(int IdPersona) {
         this.IdPersona = IdPersona;
     }
 
@@ -101,8 +109,9 @@ public class Proveedor extends Persona {
         this.telefono = telefono;
     }
 
- 
-  
-
+     @Override
+    public String toString(){
+        return IdProveedor +" - " + NombrEmpresa;
+    }
     
 }

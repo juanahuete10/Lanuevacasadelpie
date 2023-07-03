@@ -7,16 +7,16 @@ package Controlador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 /**
  *
  * @author personal
  */
 public class Conexion {
-   
-private final String
+  private final String
 url="jdbc:sqlserver://localhost:1433;databaseName=CasaDelPie2;"
 + "integratedSecurity=true;" +
-"encrypt=true;trustServerCertificate=true";
+"encrypt=true;trustServerCertificate=true; user=ge; password=123";
 
 Connection cn;
 public Connection conectar(){
@@ -28,5 +28,5 @@ try {
      System.out.println("Error en la conexión: "+e);
 }
 return null;
-}
+}  
 }

@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/NetBeansProjects/Lanuevacasadelpie/src/Controlador/CRUDProducto.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/Lanuevacasadelpie/src/Vista/frmProducto.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/Lanuevacasadelpie/src/Vista/frmCategoria.java</file>
+            <file>file:/C:/Users/personal/Documents/NetBeansProjects/NuevaCasaDelPie/src/Controlador/CRUDCategoria.java</file>
+            <file>file:/C:/Users/personal/Documents/NetBeansProjects/NuevaCasaDelPie/src/Vista/frmVenta.java</file>
+            <file>file:/C:/Users/personal/Documents/NetBeansProjects/NuevaCasaDelPie/src/Vista/frmProducto.java</file>
+            <file>file:/C:/Users/personal/Documents/NetBeansProjects/NuevaCasaDelPie/src/Vista/frmMenu.java</file>
         </group>
     </open-files>
 </project-private>

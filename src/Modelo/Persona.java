@@ -15,7 +15,8 @@ public class Persona {
     String direccion;
     String telefono;
     
-       public Persona(String cedula, String nombre, String apellido, String direccion, String telefono) {
+    
+    public Persona(String cedula, String nombre, String apellido, String direccion, String telefono) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -25,7 +26,8 @@ public class Persona {
 
     public Persona() {
     }
-
+    
+     
 
     public String getCedula() {
         return cedula;
@@ -67,5 +69,5 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    
+   
 }

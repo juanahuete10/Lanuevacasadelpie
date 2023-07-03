@@ -4,11 +4,11 @@
  */
 package Controlador;
 
-import Modelo.Categoria;
 import Modelo.Producto;
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,22 +17,20 @@ import javax.swing.table.DefaultTableModel;
  * @author personal
  */
 public class CRUDProducto {
-
-    private final Conexion con = new Conexion();
+     private final Conexion con = new Conexion();
     private final Connection cn = (Connection) con.conectar();
 
     public DefaultTableModel mostrarDatos() {
         ResultSet rs;
         DefaultTableModel modelo;
         String[] titulos = {"IdProducto", "PrecioVenta", "CantidadDisponible", 
-            "PrecioCompra", "Talla", "Descripcion", "NombreProveedor",
-            "ApellidoProveedor", "Categoria", "NombreMarca"};
+            "PrecioCompra", "Talla", "Descripcion", "Categoria", "IdMarca", "Marca", "Proveedor"};
         String[] registro = new String[10];
 
         modelo = new DefaultTableModel(null, titulos);
 
         try {
-            CallableStatement cbstc = cn.prepareCall("{call MostrarProducto}");
+            CallableStatement cbstc = cn.prepareCall("{call MostrarProductos}");
             rs = cbstc.executeQuery();
 
             while (rs.next()) {
@@ -42,10 +40,11 @@ public class CRUDProducto {
                 registro[3] = rs.getString("PrecioCompra");
                 registro[4] = rs.getString("Talla");
                 registro[5] = rs.getString("Descripcion");
-                registro[6] = rs.getString("NombreProveedor");
-                registro[7] = rs.getString("ApellidoProveedor");
-                registro[8] = rs.getString("Categoria");
-                registro[9] = rs.getString("NombreMarca");
+                registro[6] = rs.getString("Categoria");
+                registro[7] = rs.getString("IdMarca");
+                 registro[8] = rs.getString("Marca");
+                  registro[9] = rs.getString("Proveedor");
+
 
                 modelo.addRow(registro);
             }
@@ -56,30 +55,21 @@ public class CRUDProducto {
         }
     }
     
-//    public ArrayList mostrarDatosCombo(){
-//        ArrayList<Producto> Producto = new ArrayList();
-//        
-//        try{
-//            CallableStatement cbstc = cn.prepareCall("{call MostrarProducto}");
-//            ResultSet rs = cbstc.executeQuery();
-//            while (rs.next()){
-//                Producto pro = new Producto();
-//                pro.getIdProducto(rs.getString(IdProducto));
-//                
-//            }
-//        }
-//    }
+
+    
 
     public void Agregar(Producto pro) {
         try {
-            CallableStatement cbst = cn.prepareCall("{call AgregarProducto(?,?,?,?,?,?,?)}");
-            cbst.setString(1, pro.getIdProducto());
-            cbst.setInt(2,pro.getPrecioVenta());
-            cbst.setInt(3,pro.getCantidadDisponible());
-            cbst.setInt(4,pro.getPrecioCompra());
-            cbst.setString(5, pro.getCategoria());
-            cbst.setString(6, pro.getDescripcion());
-            cbst.setString(7, pro.getTalla());
+            CallableStatement cbst = cn.prepareCall("{call InsertarProducto(?,?,?,?,?,?,?,?,?,?,?,?)}");
+            cbst.setInt(1,pro.getPrecioVenta());
+            cbst.setInt(2,pro.getCantidadDisponible());
+            cbst.setInt(3,pro.getPrecioCompra());
+            cbst.setString(4, pro.getTalla());
+            cbst.setString(5, pro.getDescripcion());
+            cbst.setInt(6, pro.getIdCategorias());
+            cbst.setInt(7, pro.getIdMarca());
+            cbst.setString(8, pro.getMarca());
+            cbst.setString(9, pro.getProveedor());
             cbst.executeUpdate();
 
         } catch (SQLException e) {
@@ -90,7 +80,7 @@ public class CRUDProducto {
     public boolean verificarDatos(String dato){
         ResultSet rs;
         try{
-            CallableStatement call = cn.prepareCall("{call Producto(?)}");
+            CallableStatement call = cn.prepareCall("{call VerificarProducto(?)}");
             call.setString(1, dato);
             rs = call.executeQuery();
             return rs.next();
@@ -104,7 +94,7 @@ public class CRUDProducto {
     public void eliminar(String IdProducto) {
 
         try {
-            CallableStatement cbst = cn.prepareCall("{call EliminarProducto(?)}");
+            CallableStatement cbst = cn.prepareCall("{call Eliminar_Producto(?)}");
             cbst.setString(1, IdProducto);
             cbst.executeUpdate();
 
@@ -116,14 +106,17 @@ public class CRUDProducto {
 
     public void actualizar(Producto pro) {
         try {
-            CallableStatement cbst = cn.prepareCall("{call ModificarPro(?,?,?,?,?,?,?)}");
-            cbst.setString(1, pro.getIdProducto());
-            cbst.setInt(pro.getPrecioVenta(), 2);
-            cbst.setInt(pro.getCantidadDisponible(), 3);
-            cbst.setInt(pro.getPrecioCompra(), 4);
-            cbst.setString(5, pro.getCategoria());
-            cbst.setString(6, pro.getDescripcion());
-            cbst.setString(7, pro.getTalla());
+            CallableStatement cbst = cn.prepareCall("{call ActualizarProducto(?,?,?,?,?,?,?,?,?,?)}");
+            cbst.setInt(1, pro.getPrecioVenta());
+            cbst.setInt(2, pro.getCantidadDisponible());
+            cbst.setInt(3, pro.getPrecioCompra());
+            cbst.setString(4, pro.getTalla());
+            cbst.setString(5, pro.getDescripcion());
+            cbst.setInt(6, pro.getIdCategorias());
+            cbst.setInt(7, pro.getIdMarca());
+            cbst.setString(8, pro.getMarca());
+            cbst.setString(9, pro.getProveedor());
+            
             cbst.executeUpdate();
 
         } catch (SQLException e) {
@@ -131,26 +124,4 @@ public class CRUDProducto {
 
         }
     }
-    
-    
-    public DefaultComboBoxModel<Categoria> Llenar() {
-    DefaultComboBoxModel<Categoria> modelo = new DefaultComboBoxModel<>();
-    modelo.addElement(new Categoria(-1, "Categoria"));
-
-    try {
-        CallableStatement cbstc = cn.prepareCall("{call LlenarCategoria}");
-        ResultSet rs = cbstc.executeQuery();
-        while (rs.next()) {
-            int IdCategoria = rs.getInt(1);
-            String nombre_categoria = rs.getString(2);
-            Categoria categoria = new Categoria(IdCategoria, nombre_categoria);
-            modelo.addElement(categoria);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
- 
-    return modelo;
-}
-    
 }
